@@ -6,5 +6,5 @@ abstract class TalentApi {
   const TalentApi();
 
   /// getTalents
-  Stream<List<Talent>> getTalents();
+  Future<List<Talent>> getTalents();
 }
