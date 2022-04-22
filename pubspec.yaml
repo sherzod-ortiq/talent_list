@@ -13,10 +13,8 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   flutter_bloc: ^8.0.1
-  talent_api:
-    path: packages/talent_api
-  local_repository_talent_api:
-    path: packages/talent_api
+  remote_talent_api:
+    path: packages/remote_talent_api
 
 
 

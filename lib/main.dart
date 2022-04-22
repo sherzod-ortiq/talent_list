@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:remote_talent_api/remote_talent_api.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,11 +11,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Talent list',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Talent list'),
     );
   }
 }
@@ -31,7 +32,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
-  void _incrementCounter() {
+  void _incrementCounter() async {
+    final talents = await const RemoteTalentApi().getTalents();
+    print(talents[0]);
     setState(() {
       _counter++;
     });

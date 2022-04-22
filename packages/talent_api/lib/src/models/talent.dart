@@ -15,13 +15,14 @@ class Talent extends Equatable {
     required this.username,
     required this.name,
     required this.email,
+    required this.address,
     required this.phone,
     required this.website,
-    required this.address,
+    required this.company,
   });
 
   /// id
-  final String id;
+  final int id;
 
   /// username
   final String username;
@@ -32,33 +33,38 @@ class Talent extends Equatable {
   /// email
   final String email;
 
+  /// address
+  final Map<String, dynamic> address;
+
   /// phone
   final String phone;
 
   /// website
   final String website;
 
-  /// address
-  final String address;
+  /// company
+  final Map<String, dynamic> company;
 
   /// copyWith
   Talent copyWith({
-    String? id,
+    int? id,
     String? username,
     String? name,
     String? email,
+    Map<String, dynamic>? address,
     String? phone,
     String? website,
-    String? address,
+    Map<String, dynamic>? company,
   }) {
     return Talent(
       id: id ?? this.id,
       username: username ?? this.username,
       name: name ?? this.name,
       email: email ?? this.email,
+      address: address ?? this.address,
       phone: phone ?? this.phone,
       website: website ?? this.website,
-      address: address ?? this.address,
+      company: company ?? this.company,
     );
   }
 
@@ -74,8 +80,9 @@ class Talent extends Equatable {
         username,
         name,
         email,
+        address,
         phone,
         website,
-        address,
+        company,
       ];
 }

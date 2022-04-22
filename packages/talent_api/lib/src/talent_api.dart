@@ -1,8 +1,10 @@
 import 'package:talent_api/talent_api.dart';
 
-/// TalentApi
+/// {@template talent_api}
+/// The interface and models for an API providing access to talents.
+/// {@endtemplate}
 abstract class TalentApi {
-  /// TalentApi constructor
+  /// {@macro TalentApi}
   const TalentApi();
 
   /// getTalents
