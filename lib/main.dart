@@ -1,13 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:remote_talent_api/remote_talent_api.dart';
 import 'package:talent_repository/talent_repository.dart';
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+
+  const talentRepository = TalentRepository(talentApi: RemoteTalentApi());
+
+  runApp(const App(talentRepository: talentRepository));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class App extends StatelessWidget {
+  const App({Key? key, required this.talentRepository}) : super(key: key);
+
+  final TalentRepository talentRepository;
+
+  @override
+  Widget build(BuildContext context) {
+    return RepositoryProvider.value(
+      value: talentRepository,
+      child: const AppView(),
+    );
+  }
+}
+
+class AppView extends StatelessWidget {
+  const AppView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() async {
     final talents =
-        await const TalentRepository(talentApi: RemoteTalentApi()).getTalents();
+        await RepositoryProvider.of<TalentRepository>(context).getTalents();
     print(talents[0]);
     setState(() {
       _counter++;
