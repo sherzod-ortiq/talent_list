@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:remote_talent_api/remote_talent_api.dart';
+import 'package:talent_repository/talent_repository.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,7 +34,8 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   void _incrementCounter() async {
-    final talents = await const RemoteTalentApi().getTalents();
+    final talents =
+        await const TalentRepository(talentApi: RemoteTalentApi()).getTalents();
     print(talents[0]);
     setState(() {
       _counter++;

@@ -212,6 +212,13 @@ packages:
       relative: true
     source: path
     version: "1.0.0+1"
+  talent_repository:
+    dependency: "direct main"
+    description:
+      path: "packages/talent_repository"
+      relative: true
+    source: path
+    version: "1.0.0+1"
   term_glyph:
     dependency: transitive
     description:
