@@ -8,5 +8,8 @@ abstract class TalentApi {
   const TalentApi();
 
   /// getTalents
-  Future<List<Talent>> getTalents();
+  Future<List<Talent>> getTalents({
+    int startIndex = 0,
+    int talentLimit = 20,
+  });
 }

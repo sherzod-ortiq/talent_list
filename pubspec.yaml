@@ -12,13 +12,14 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
-  flutter_bloc: ^8.0.1
+  bloc: ^7.2.1
+  flutter_bloc: ^7.3.3
+  bloc_concurrency: ^0.1.0
   remote_talent_api:
     path: packages/remote_talent_api
   talent_repository:
     path: packages/talent_repository
-
-
+  equatable: ^2.0.3
 
 dev_dependencies:
   flutter_test:

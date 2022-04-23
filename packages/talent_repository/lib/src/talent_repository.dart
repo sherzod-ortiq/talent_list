@@ -12,5 +12,9 @@ class TalentRepository {
   final TalentApi _talentApi;
 
   /// getTalents
-  Future<List<Talent>> getTalents() => _talentApi.getTalents();
+  Future<List<Talent>> getTalents({
+    int startIndex = 0,
+    int talentLimit = 20,
+  }) =>
+      _talentApi.getTalents(startIndex: startIndex, talentLimit: talentLimit);
 }
