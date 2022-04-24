@@ -24,31 +24,36 @@ class TalentCard extends StatelessWidget {
             //   arguments: bloc,
             // );
           },
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Text(
-                        _talent.username,
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Text(
-                        _talent.username,
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+          child: ListTile(
+            leading: const Icon(Icons.adjust_sharp),
+            title: Text(_talent.username),
+            subtitle: Text(_talent.name),
           ),
+          // Column(
+          //   children: [
+          //     Padding(
+          //       padding: const EdgeInsets.all(8.0),
+          //       child: Column(
+          //         children: [
+          //           Padding(
+          //             padding: const EdgeInsets.all(4.0),
+          //             child: Text(
+          //               _talent.username,
+          //               style: Theme.of(context).textTheme.headline6,
+          //             ),
+          //           ),
+          //           Padding(
+          //             padding: const EdgeInsets.all(4.0),
+          //             child: Text(
+          //               _talent.username,
+          //               style: Theme.of(context).textTheme.headline6,
+          //             ),
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //   ],
+          // ),
         ),
       ),
     );
