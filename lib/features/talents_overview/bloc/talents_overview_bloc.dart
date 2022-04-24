@@ -32,14 +32,6 @@ class TalentsOverviewBloc
 
   final TalentRepository _talentRepository;
 
-  // @override
-  // Stream<TalentsOverviewState> mapEventToState(
-  //     TalentsOverviewEvent event) async* {
-  //   if (event is TalentsOverviewLoadRequested) {
-  //     yield* _mapTalentsOverviewLoadRequestedToState();
-  //   }
-  // }
-
   @override
   Future<void> close() {
     return super.close();
@@ -52,6 +44,9 @@ class TalentsOverviewBloc
     if (state.hasReachedMax) return;
     try {
       if (state.loadStatus == TalentsOverviewLoadStatus.initial) {
+        emit(state.copyWith(
+          loadStatus: TalentsOverviewLoadStatus.loading,
+        ));
         final talents = await _talentRepository.getTalents();
         return emit(state.copyWith(
           loadStatus: TalentsOverviewLoadStatus.success,
@@ -59,6 +54,9 @@ class TalentsOverviewBloc
           hasReachedMax: false,
         ));
       }
+      emit(state.copyWith(
+        loadStatus: TalentsOverviewLoadStatus.loading,
+      ));
       final talents =
           await _talentRepository.getTalents(startIndex: state.talents.length);
       if (talents.isEmpty) {
@@ -77,37 +75,3 @@ class TalentsOverviewBloc
     }
   }
 }
-
-  // Stream<TalentsOverviewState>
-  //     _mapTalentsOverviewLoadRequestedToState() async* {
-  //   if (state.hasReachedMax) return;
-  //   try {
-  //     if (state.loadStatus == TalentsOverviewLoadStatus.initial) {
-  //       final talents = await _talentRepository.getTalents();
-  //       yield state.copyWith(
-  //         loadStatus: TalentsOverviewLoadStatus.success,
-  //         talents: talents,
-  //         hasReachedMax: false,
-  //       );
-  //       return;
-  //     }
-  //     final talents =
-  //         await _talentRepository.getTalents(startIndex: state.talents.length);
-  //     if (talents.isEmpty) {
-  //       yield state.copyWith(hasReachedMax: true);
-  //       return;
-  //     } else {
-  //       yield state.copyWith(
-  //         loadStatus: TalentsOverviewLoadStatus.success,
-  //         talents: List.of(state.talents)..addAll(talents),
-  //         hasReachedMax: false,
-  //       );
-  //       return;
-  //     }
-  //   } catch (_) {
-  //     yield state.copyWith(
-  //       loadStatus: TalentsOverviewLoadStatus.failure,
-  //     );
-  //     return;
-  //   }
-  // }

@@ -1,6 +1,6 @@
 part of 'talents_overview_bloc.dart';
 
-enum TalentsOverviewLoadStatus { initial, success, failure }
+enum TalentsOverviewLoadStatus { initial, loading, success, failure }
 
 class TalentsOverviewState extends Equatable {
   const TalentsOverviewState({

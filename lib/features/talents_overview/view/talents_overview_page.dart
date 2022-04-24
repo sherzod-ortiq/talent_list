@@ -6,6 +6,7 @@ import 'package:talent_list/features/talents_overview/talents_overview.dart';
 import 'package:talent_repository/talent_repository.dart';
 
 class TalentsOverviewPage extends StatelessWidget {
+  static const routeNmae = '/talents-overview';
   const TalentsOverviewPage({Key? key}) : super(key: key);
 
   @override
@@ -24,142 +25,57 @@ class TalentsOverviewView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final l10n = context.l10n;
-
     return Scaffold(
       appBar: AppBar(
-        // title: Text(l10n.talentOverviewAppBarTitle),
-        actions: const [
-          // TalentsOverviewFilterButton(),
-          // TalentsOverviewOptionsButton(),
+        title: const Text('Talent list'),
+        actions: const [],
+      ),
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<TalentsOverviewBloc, TalentsOverviewState>(
+            listenWhen: (previous, current) =>
+                previous.loadStatus != current.loadStatus,
+            listener: (context, state) {
+              if (state.loadStatus == TalentsOverviewLoadStatus.failure) {
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    const SnackBar(
+                      content: Text('Failed to load'),
+                    ),
+                  );
+              }
+            },
+          ),
         ],
-      ),
-      body:
-          // MultiBlocListener(
-          //   listeners: [
-          // BlocListener<TalentsOverviewBloc, TalentsOverviewState>(
-          //   listenWhen: (previous, current) =>
-          //       previous.status != current.status,
-          //   listener: (context, state) {
-          //     if (state.status == TalentsOverviewStatus.failure) {
-          //       ScaffoldMessenger.of(context)
-          //         ..hideCurrentSnackBar()
-          //         ..showSnackBar(
-          //           SnackBar(
-          //             content: Text(l10n.talentOverviewErrorSnackbarText),
-          //           ),
-          //         );
-          //     }
-          //   },
-          // ),
-          // BlocListener<TalentsOverviewBloc, TalentsOverviewState>(
-          //   listenWhen: (previous, current) =>
-          //       previous.lastDeletedTodo != current.lastDeletedTodo &&
-          //       current.lastDeletedTodo != null,
-          //   listener: (context, state) {
-          //     final deletedTodo = state.lastDeletedTodo!;
-          //     final messenger = ScaffoldMessenger.of(context);
-          //     messenger
-          //       ..hideCurrentSnackBar()
-          //       ..showSnackBar(
-          //         SnackBar(
-          //           content: Text(
-          //             l10n.talentOverviewTodoDeletedSnackbarText(
-          //               deletedTodo.title,
-          //             ),
-          //           ),
-          //           action: SnackBarAction(
-          //             label: l10n.talentOverviewUndoDeletionButtonText,
-          //             onPressed: () {
-          //               messenger.hideCurrentSnackBar();
-          //               context
-          //                   .read<TalentsOverviewBloc>()
-          //                   .add(const TalentsOverviewUndoDeletionRequested());
-          //             },
-          //           ),
-          //         ),
-          //       );
-          //   },
-          // ),
-          // ],
-          // child:
-          BlocBuilder<TalentsOverviewBloc, TalentsOverviewState>(
-        builder: (context, state) {
-          // if (state.talent.isEmpty) {
-          //   if (state.status == TalentsOverviewStatus.loading) {
-          //     return const Center(child: CupertinoActivityIndicator());
-          //   } else if (state.status != TalentsOverviewStatus.success) {
-          //     return const SizedBox();
-          //   } else {
-          //     return Center(
-          //       child: Text(
-          //         l10n.talentOverviewEmptyText,
-          //         style: Theme.of(context).textTheme.caption,
-          //       ),
-          //     );
-          //   }
-          // }
+        child: BlocBuilder<TalentsOverviewBloc, TalentsOverviewState>(
+          builder: (context, state) {
+            if (state.talents.isEmpty) {
+              if (state.loadStatus == TalentsOverviewLoadStatus.loading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (state.loadStatus !=
+                  TalentsOverviewLoadStatus.success) {
+                return const SizedBox();
+              } else {
+                return const Center(
+                  child: Text(
+                    "No talents yet",
+                  ),
+                );
+              }
+            }
 
-          // return CupertinoScrollbar(
-          //   child: ListView(
-          //     children: [
-          //       for (final todo in state.filteredTalents)
-          //         TodoListTile(
-          //           todo: todo,
-          //           onToggleCompleted: (isCompleted) {
-          //             context.read<TalentsOverviewBloc>().add(
-          //                   TalentsOverviewTodoCompletionToggled(
-          //                     todo: todo,
-          //                     isCompleted: isCompleted,
-          //                   ),
-          //                 );
-          //           },
-          //           onDismissed: (_) {
-          //             context
-          //                 .read<TalentsOverviewBloc>()
-          //                 .add(TalentsOverviewTodoDeleted(todo));
-          //           },
-          //           onTap: () {
-          //             Navigator.of(context).push(
-          //               EditTodoPage.route(initialTodo: todo),
-          //             );
-          //           },
-          //         ),
-          //     ],
-          //   ),
-          // );
-
-          return CupertinoScrollbar(
-            child: ListView(
-              children: [
-                for (final talent in state.talents) Text(talent.name),
-                // TodoListTile(
-                //   todo: todo,
-                //   onToggleCompleted: (isCompleted) {
-                //     context.read<TalentsOverviewBloc>().add(
-                //           TalentsOverviewTodoCompletionToggled(
-                //             todo: todo,
-                //             isCompleted: isCompleted,
-                //           ),
-                //         );
-                //   },
-                //   onDismissed: (_) {
-                //     context
-                //         .read<TalentsOverviewBloc>()
-                //         .add(TalentsOverviewTodoDeleted(todo));
-                //   },
-                //   onTap: () {
-                //     Navigator.of(context).push(
-                //       EditTodoPage.route(initialTodo: todo),
-                //     );
-                //   },
-                // ),
-              ],
-            ),
-          );
-        },
+            return CupertinoScrollbar(
+                child: ListView.builder(
+              itemCount: state.talents.length,
+              itemBuilder: (context, index) =>
+                  TalentCard(talent: state.talents[index]),
+            ));
+          },
+        ),
       ),
-      // ),
     );
   }
 }

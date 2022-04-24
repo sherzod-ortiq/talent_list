@@ -4,6 +4,8 @@ import 'package:remote_talent_api/remote_talent_api.dart';
 import 'package:talent_list/features/talents_overview/view/talents_overview_page.dart';
 import 'package:talent_repository/talent_repository.dart';
 
+import 'theme/custom_theme.dart';
+
 // import 'package:talent_list/features/talents_overview/talents_overview.dart';
 
 void main() {
@@ -35,9 +37,7 @@ class AppView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Talent list',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: CustomTheme.lightTheme,
       home: const TalentsOverviewPage(),
     );
   }
