@@ -14,7 +14,37 @@ class TalentRepository {
   /// getTalents
   Future<List<Talent>> getTalents({
     int startIndex = 0,
-    int talentLimit = 20,
-  }) =>
-      _talentApi.getTalents(startIndex: startIndex, talentLimit: talentLimit);
+    int limit = 20,
+  }) {
+    return _talentApi.getTalents(
+      startIndex: startIndex,
+      limit: limit,
+    );
+  }
+
+  /// getTalentPosts
+  Future<List<Post>> getTalentPosts({
+    required int talentId,
+    int startIndex = 0,
+    int limit = 20,
+  }) {
+    return _talentApi.getTalentPosts(
+      talentId: talentId,
+      startIndex: startIndex,
+      limit: limit,
+    );
+  }
+
+  /// getTalentAlbums
+  Future<List<Album>> getTalentAlbums({
+    required int talentId,
+    int startIndex = 0,
+    int limit = 20,
+  }) {
+    return _talentApi.getTalentAlbums(
+      talentId: talentId,
+      startIndex: startIndex,
+      limit: limit,
+    );
+  }
 }

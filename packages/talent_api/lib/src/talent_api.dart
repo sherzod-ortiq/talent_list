@@ -9,7 +9,21 @@ abstract class TalentApi {
 
   /// getTalents
   Future<List<Talent>> getTalents({
-    int startIndex = 0,
-    int talentLimit = 20,
+    required int startIndex,
+    required int limit,
+  });
+
+  /// getTalentPosts
+  Future<List<Post>> getTalentPosts({
+    required int talentId,
+    required int startIndex,
+    required int limit,
+  });
+
+  /// getTalentAlbums
+  Future<List<Album>> getTalentAlbums({
+    required int talentId,
+    required int startIndex,
+    required int limit,
   });
 }

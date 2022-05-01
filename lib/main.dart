@@ -8,10 +8,16 @@ import 'theme/custom_theme.dart';
 
 // import 'package:talent_list/features/talents_overview/talents_overview.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   const talentRepository = TalentRepository(talentApi: RemoteTalentApi());
+
+  final _talentPosts = await talentRepository.getTalentPosts(talentId: 1);
+  final _talentAlbums = await talentRepository.getTalentAlbums(talentId: 1);
+
+  print(_talentPosts);
+  print(_talentAlbums);
 
   runApp(const App(talentRepository: talentRepository));
 }

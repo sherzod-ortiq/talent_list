@@ -13,7 +13,7 @@ class TalentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(6),
       child: Card(
         margin: const EdgeInsets.all(0),
         child: InkWell(
