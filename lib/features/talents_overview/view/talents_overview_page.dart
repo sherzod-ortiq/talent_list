@@ -6,8 +6,9 @@ import 'package:talent_list/features/talents_overview/talents_overview.dart';
 import 'package:talent_repository/talent_repository.dart';
 
 class TalentsOverviewPage extends StatelessWidget {
-  static const routeNmae = '/talents-overview';
   const TalentsOverviewPage({Key? key}) : super(key: key);
+
+  static const routeName = '/talents-overview';
 
   @override
   Widget build(BuildContext context) {

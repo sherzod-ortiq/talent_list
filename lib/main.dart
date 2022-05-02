@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:remote_talent_api/remote_talent_api.dart';
-import 'package:talent_list/features/talents_overview/view/talents_overview_page.dart';
 import 'package:talent_repository/talent_repository.dart';
 
 import 'theme/custom_theme.dart';
+import 'routes/custom_routes.dart';
 
-// import 'package:talent_list/features/talents_overview/talents_overview.dart';
+import 'package:talent_list/features/talents_overview/talents_overview.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   const talentRepository = TalentRepository(talentApi: RemoteTalentApi());
-
-  final _talentPosts = await talentRepository.getTalentPosts(talentId: 1);
-  final _talentAlbums = await talentRepository.getTalentAlbums(talentId: 1);
-
-  print(_talentPosts);
-  print(_talentAlbums);
 
   runApp(const App(talentRepository: talentRepository));
 }
@@ -45,6 +39,7 @@ class AppView extends StatelessWidget {
       title: 'Talent list',
       theme: CustomTheme.lightTheme,
       home: const TalentsOverviewPage(),
+      routes: CustomRoutes.routes,
     );
   }
 }

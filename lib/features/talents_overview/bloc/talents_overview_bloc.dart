@@ -2,21 +2,12 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:bloc/bloc.dart';
-import 'package:bloc_concurrency/bloc_concurrency.dart';
-import 'package:stream_transform/stream_transform.dart';
 
+import 'package:talent_list/event_transformer/event_transformer.dart';
 import 'package:talent_repository/talent_repository.dart';
 
 part 'talents_overview_event.dart';
 part 'talents_overview_state.dart';
-
-const throttleDuration = Duration(milliseconds: 100);
-
-EventTransformer<E> throttleDroppable<E>(Duration duration) {
-  return (events, mapper) {
-    return droppable<E>().call(events.throttle(duration), mapper);
-  };
-}
 
 class TalentsOverviewBloc
     extends Bloc<TalentsOverviewEvent, TalentsOverviewState> {
@@ -26,7 +17,7 @@ class TalentsOverviewBloc
         super(const TalentsOverviewState()) {
     on<TalentsOverviewLoadRequested>(
       _onTalentsOverviewLoadRequested,
-      transformer: throttleDroppable(throttleDuration),
+      transformer: CustomEventTransformer.throttleDroppable(),
     );
   }
 

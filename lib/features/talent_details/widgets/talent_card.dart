@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:talent_repository/talent_repository.dart';
 
-import 'package:talent_list/features/talent_details/talent_details.dart';
-
 class TalentCard extends StatelessWidget {
   const TalentCard({Key? key, required Talent talent})
       : _talent = talent,
@@ -20,11 +18,11 @@ class TalentCard extends StatelessWidget {
         margin: const EdgeInsets.all(0),
         child: InkWell(
           onTap: () {
-            Navigator.pushNamed(
-              context,
-              TalentDetailsPage.routeName,
-              arguments: _talent,
-            );
+            // Navigator.pushNamed(
+            //   context,
+            //   TalentCardDetailsScreen.routeName,
+            //   arguments: bloc,
+            // );
           },
           child: ListTile(
             leading: const Icon(Icons.adjust_sharp),
