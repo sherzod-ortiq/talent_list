@@ -10,3 +10,9 @@ abstract class TalentDetailsEvent extends Equatable {
 class TalentDetailsPostsLoadRequested extends TalentDetailsEvent {}
 
 class TalentDetailsAlbumsLoadRequested extends TalentDetailsEvent {}
+
+class TalentDetailsAlbumPhotosLoadRequested extends TalentDetailsEvent {
+  const TalentDetailsAlbumPhotosLoadRequested({required this.albumId});
+
+  final int albumId;
+}

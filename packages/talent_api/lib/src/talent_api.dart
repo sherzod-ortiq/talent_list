@@ -26,4 +26,11 @@ abstract class TalentApi {
     required int startIndex,
     required int limit,
   });
+
+  /// getAlbumPhotos
+  Future<List<Photo>> getAlbumPhotos({
+    required int albumId,
+    required int startIndex,
+    required int limit,
+  });
 }

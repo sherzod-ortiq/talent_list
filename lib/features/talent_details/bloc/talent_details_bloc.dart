@@ -21,11 +21,16 @@ class TalentDetailsBloc extends Bloc<TalentDetailsEvent, TalentDetailsState> {
     on<TalentDetailsAlbumsLoadRequested>(
       _onTalentDetailsAlbumsLoadRequested,
     );
+    on<TalentDetailsAlbumPhotosLoadRequested>(
+      _onTalentDetailsAlbumPhotosLoadRequested,
+    );
   }
 
   final TalentRepository _talentRepository;
   final int _talentId;
-  final int _previewLimit = 3;
+  final int _postsPreviewLimit = 3;
+  final int _albumsPreviewLimit = 3;
+  final int _albumPhotosPreviewLimit = 4;
 
   @override
   Future<void> close() {
@@ -42,7 +47,7 @@ class TalentDetailsBloc extends Bloc<TalentDetailsEvent, TalentDetailsState> {
           postsLoadStatus: TalentDetailsLoadStatus.loading,
         ));
         final posts = await _talentRepository.getTalentPosts(
-            talentId: _talentId, limit: _previewLimit);
+            talentId: _talentId, limit: _postsPreviewLimit);
         return emit(state.copyWith(
           posts: posts,
           postsLoadStatus: TalentDetailsLoadStatus.success,
@@ -65,7 +70,7 @@ class TalentDetailsBloc extends Bloc<TalentDetailsEvent, TalentDetailsState> {
           albumsLoadStatus: TalentDetailsLoadStatus.loading,
         ));
         final albums = await _talentRepository.getTalentAlbums(
-            talentId: _talentId, limit: _previewLimit);
+            talentId: _talentId, limit: _albumsPreviewLimit);
         return emit(state.copyWith(
           albums: albums,
           albumsLoadStatus: TalentDetailsLoadStatus.success,
@@ -74,6 +79,45 @@ class TalentDetailsBloc extends Bloc<TalentDetailsEvent, TalentDetailsState> {
     } catch (_) {
       return emit(state.copyWith(
         albumsLoadStatus: TalentDetailsLoadStatus.failure,
+      ));
+    }
+  }
+
+  Future<void> _onTalentDetailsAlbumPhotosLoadRequested(
+    TalentDetailsAlbumPhotosLoadRequested event,
+    Emitter<TalentDetailsState> emit,
+  ) async {
+    try {
+      if (state.albumPhotosLoadStatus[event.albumId] == null ||
+          state.albumPhotosLoadStatus[event.albumId] ==
+              TalentDetailsLoadStatus.initial) {
+        var _albumPhotosLoadStatus = {...state.albumPhotosLoadStatus};
+        _albumPhotosLoadStatus[event.albumId] = TalentDetailsLoadStatus.loading;
+
+        emit(state.copyWith(
+          albumPhotosLoadStatus: _albumPhotosLoadStatus,
+        ));
+
+        final _albumPhotos = await _talentRepository.getAlbumPhotos(
+            albumId: event.albumId, limit: _albumPhotosPreviewLimit);
+
+        final _photos = {...state.photos};
+        _photos[event.albumId] = _albumPhotos;
+
+        _albumPhotosLoadStatus = state.albumPhotosLoadStatus;
+        _albumPhotosLoadStatus[event.albumId] = TalentDetailsLoadStatus.success;
+
+        return emit(state.copyWith(
+          photos: _photos,
+          albumPhotosLoadStatus: _albumPhotosLoadStatus,
+        ));
+      }
+    } catch (_) {
+      final _albumPhotosLoadStatus = state.albumPhotosLoadStatus;
+      _albumPhotosLoadStatus[event.albumId] = TalentDetailsLoadStatus.failure;
+
+      return emit(state.copyWith(
+        albumPhotosLoadStatus: _albumPhotosLoadStatus,
       ));
     }
   }

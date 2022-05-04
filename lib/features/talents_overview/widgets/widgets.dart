@@ -1,1 +1,1 @@
-export 'talent_card.dart';
+export 'talent_list_tile.dart';

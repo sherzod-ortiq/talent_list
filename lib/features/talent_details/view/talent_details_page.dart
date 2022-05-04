@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -41,75 +40,114 @@ class TalentDetailsView extends StatelessWidget {
         title: Text(_talent.username),
         actions: const [],
       ),
-      body: BlocListener<TalentDetailsBloc, TalentDetailsState>(
-        listenWhen: (previous, current) =>
-            previous.postsLoadStatus != current.postsLoadStatus ||
-            previous.albumsLoadStatus != current.albumsLoadStatus,
-        listener: (context, state) {
-          if (state.postsLoadStatus == TalentDetailsLoadStatus.failure) {
-            ScaffoldMessenger.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(
-                const SnackBar(
-                  content: Text('Failed to load posts'),
+      body: LayoutBuilder(
+        builder: (
+          BuildContext context,
+          BoxConstraints viewportConstraints,
+        ) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: viewportConstraints.maxHeight,
+              ),
+              child: Container(
+                margin: const EdgeInsets.all(0),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20.0, bottom: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              _talent.name,
+                              style: Theme.of(context).textTheme.headline4,
+                            ),
+                          ],
+                        ),
+                      ),
+                      InfoTile(name: 'Email', value: _talent.email),
+                      const Divider(),
+                      InfoTile(name: 'Phone', value: _talent.phone),
+                      const Divider(),
+                      InfoTile(name: 'Website', value: _talent.website),
+                      const Divider(),
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Company:',
+                              style: Theme.of(context).textTheme.headline6,
+                            ),
+                            SubInfoTile(
+                              name: 'Name',
+                              value: _talent.company['name'],
+                            ),
+                            SubInfoTile(
+                              name: 'BS',
+                              value: _talent.company['bs'],
+                            ),
+                            SubInfoTile(
+                              name: 'Catch phrase',
+                              value: _talent.company['catchPhrase'],
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Divider(),
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Address:',
+                              style: Theme.of(context).textTheme.headline6,
+                            ),
+                            SubInfoTile(
+                              name: 'Street',
+                              value: _talent.address['street'],
+                            ),
+                            SubInfoTile(
+                              name: 'Suite',
+                              value: _talent.address['suite'],
+                            ),
+                            SubInfoTile(
+                              name: 'City',
+                              value: _talent.address['city'],
+                            ),
+                            SubInfoTile(
+                              name: 'Zipcode',
+                              value: _talent.address['zipcode'],
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Divider(),
+                      const Padding(
+                        padding: EdgeInsets.all(4.0),
+                        child: Text('Posts:'),
+                      ),
+                      const PostsPreview(),
+                      const Divider(),
+                      const Padding(
+                        padding: EdgeInsets.all(4.0),
+                        child: Text('Albums:'),
+                      ),
+                      const AlbumsPreview(),
+                    ],
+                  ),
                 ),
-              );
-          }
-          if (state.albumsLoadStatus == TalentDetailsLoadStatus.failure) {
-            ScaffoldMessenger.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(
-                const SnackBar(
-                  content: Text('Failed to load albums'),
-                ),
-              );
-          }
+              ),
+            ),
+          );
         },
-        child: BlocBuilder<TalentDetailsBloc, TalentDetailsState>(
-          builder: (context, state) {
-            if (state.posts.isEmpty) {
-              if (state.postsLoadStatus == TalentDetailsLoadStatus.loading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (state.postsLoadStatus !=
-                  TalentDetailsLoadStatus.success) {
-                return const SizedBox();
-              } else {
-                return const Center(
-                  child: Text(
-                    "No posts yet",
-                  ),
-                );
-              }
-            }
-
-            if (state.albums.isEmpty) {
-              if (state.albumsLoadStatus == TalentDetailsLoadStatus.loading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (state.albumsLoadStatus !=
-                  TalentDetailsLoadStatus.success) {
-                return const SizedBox();
-              } else {
-                return const Center(
-                  child: Text(
-                    "No albums yet",
-                  ),
-                );
-              }
-            }
-
-            return CupertinoScrollbar(
-                child: ListView.builder(
-              itemCount: state.posts.length,
-              itemBuilder: (context, index) => Text(
-                  "Post title: ${state.posts[index].title} Album title: ${state.albums[index].title}"),
-              // TalentCard(talent: state.posts[index]),
-            ));
-          },
-        ),
       ),
     );
   }

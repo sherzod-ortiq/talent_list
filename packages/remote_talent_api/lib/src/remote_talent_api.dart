@@ -79,6 +79,30 @@ class RemoteTalentApi extends TalentApi {
     }
   }
 
+  @override
+  Future<List<Photo>> getAlbumPhotos({
+    required int albumId,
+    required int startIndex,
+    required int limit,
+  }) async {
+    final response = await http.get(
+      Uri.https(
+        'jsonplaceholder.typicode.com',
+        '/photos',
+        <String, String>{'_start': '$startIndex', '_limit': '$limit'},
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      final photos = List<Map>.from(json.decode(response.body) as List)
+          .map((jsonMap) => Photo.fromJson(Map<String, dynamic>.from(jsonMap)))
+          .toList();
+      return photos;
+    } else {
+      throw Exception('Error fetching photos');
+    }
+  }
+
   Future<http.Response> _fetchTalentData({
     required int talentId,
     required String model,

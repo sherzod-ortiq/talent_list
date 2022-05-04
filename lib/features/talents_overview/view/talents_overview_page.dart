@@ -72,7 +72,7 @@ class TalentsOverviewView extends StatelessWidget {
                 child: ListView.builder(
               itemCount: state.talents.length,
               itemBuilder: (context, index) =>
-                  TalentCard(talent: state.talents[index]),
+                  TalentListTile(talent: state.talents[index]),
             ));
           },
         ),

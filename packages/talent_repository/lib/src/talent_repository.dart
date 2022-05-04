@@ -47,4 +47,17 @@ class TalentRepository {
       limit: limit,
     );
   }
+
+  /// getAlbumPhotos
+  Future<List<Photo>> getAlbumPhotos({
+    required int albumId,
+    int startIndex = 0,
+    int limit = 20,
+  }) {
+    return _talentApi.getAlbumPhotos(
+      albumId: albumId,
+      startIndex: startIndex,
+      limit: limit,
+    );
+  }
 }
