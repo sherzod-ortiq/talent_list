@@ -5,7 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:talent_list/features/talent_details/talent_details.dart';
 
 class AlbumsPreview extends StatelessWidget {
-  const AlbumsPreview({Key? key}) : super(key: key);
+  const AlbumsPreview({required int talentId, Key? key})
+      : _talentId = talentId,
+        super(key: key);
+
+  final int _talentId;
 
   final double _height = 200.0;
 
@@ -73,7 +77,7 @@ class AlbumsPreview extends StatelessWidget {
               children: <Widget>[
                 ...state.albums.map((album) =>
                     AlbumCardMin(albumId: album.id, title: album.title)),
-                const AlbumsSeeMore(),
+                AlbumsSeeMore(talentId: _talentId),
               ],
             ),
           );

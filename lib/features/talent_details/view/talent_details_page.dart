@@ -140,7 +140,7 @@ class TalentDetailsView extends StatelessWidget {
                         padding: EdgeInsets.all(4.0),
                         child: Text('Albums:'),
                       ),
-                      const AlbumsPreview(),
+                      AlbumsPreview(talentId: _talent.id),
                     ],
                   ),
                 ),

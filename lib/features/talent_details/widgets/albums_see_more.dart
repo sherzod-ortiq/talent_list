@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 
+import 'package:talent_list/features/albums_overview/albums_overview.dart';
+
 class AlbumsSeeMore extends StatelessWidget {
-  const AlbumsSeeMore({
-    Key? key,
-  }) : super(key: key);
+  const AlbumsSeeMore({required int talentId, Key? key})
+      : _talentId = talentId,
+        super(key: key);
+
+  final int _talentId;
 
   final double _width = 200;
 
@@ -12,7 +16,13 @@ class AlbumsSeeMore extends StatelessWidget {
     return SizedBox(
       width: _width,
       child: InkWell(
-        // onTap: () => selectMeal(context),
+        onTap: () {
+          Navigator.pushNamed(
+            context,
+            AlbumsOverviewPage.routeName,
+            arguments: _talentId,
+          );
+        },
         child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
