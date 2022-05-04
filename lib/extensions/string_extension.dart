@@ -5,10 +5,10 @@ extension StringExtension on String {
         : '';
   }
 
-  String shortFormat(int length) {
-    if (this.length > length) {
-      return '${capitalize().substring(0, length)}...';
+  String shortFormat() {
+    if (length > 40) {
+      return '${substring(0, 40).capitalize().split('\n')[0]}...';
     }
-    return capitalize();
+    return capitalize().split('\n')[0];
   }
 }

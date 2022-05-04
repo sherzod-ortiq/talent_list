@@ -32,7 +32,7 @@ class PostListTile extends StatelessWidget {
             style: Theme.of(context).textTheme.headline6,
           ),
           subtitle: Text(
-            _post.body.shortFormat(30),
+            _post.body.shortFormat(),
           ),
         ),
       ),

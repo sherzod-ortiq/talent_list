@@ -37,7 +37,7 @@ class PostCardMini extends StatelessWidget {
               style: Theme.of(context).textTheme.headline6,
             ),
             subtitle: Text(
-              _body.shortFormat(30),
+              _body.shortFormat(),
             ),
           ),
         ),
