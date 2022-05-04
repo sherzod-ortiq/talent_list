@@ -26,8 +26,8 @@ class TalentDetailsBloc extends Bloc<TalentDetailsEvent, TalentDetailsState> {
     );
   }
 
-  final TalentRepository _talentRepository;
   final int _talentId;
+  final TalentRepository _talentRepository;
   final int _postsPreviewLimit = 3;
   final int _albumsPreviewLimit = 3;
   final int _albumPhotosPreviewLimit = 4;

@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:talent_list/features/talent_details/talent_details.dart';
 
+import 'package:talent_list/extensions/extensions.dart';
+
 class AlbumCardMin extends StatelessWidget {
   const AlbumCardMin({
     Key? key,
@@ -164,8 +166,7 @@ class AlbumCardMin extends StatelessWidget {
                             horizontal: 20,
                           ),
                           child: Text(
-                            _title.replaceFirst(
-                                _title[0], _title[0].toUpperCase()),
+                            _title.capitalize(),
                             style: TextStyle(
                               fontSize: 13,
                               color: Theme.of(context).colorScheme.onBackground,

@@ -25,7 +25,7 @@ class TalentListTile extends StatelessWidget {
           );
         },
         child: ListTile(
-          leading: const Icon(Icons.adjust_sharp),
+          leading: const Icon(Icons.portrait),
           title: Text(_talent.username),
           subtitle: Text(_talent.name),
         ),

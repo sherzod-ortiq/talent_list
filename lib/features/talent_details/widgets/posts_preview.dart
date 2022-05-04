@@ -5,7 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:talent_list/features/talent_details/talent_details.dart';
 
 class PostsPreview extends StatelessWidget {
-  const PostsPreview({Key? key}) : super(key: key);
+  const PostsPreview({required int talentId, Key? key})
+      : _talentId = talentId,
+        super(key: key);
+
+  final int _talentId;
 
   final double _height = 120.0;
 
@@ -58,7 +62,9 @@ class PostsPreview extends StatelessWidget {
               children: <Widget>[
                 ...state.posts.map(
                     (post) => PostCardMini(title: post.title, body: post.body)),
-                const PostsSeeMore(),
+                PostsSeeMore(
+                  talentId: _talentId,
+                ),
               ],
             ),
           );

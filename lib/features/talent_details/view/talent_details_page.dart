@@ -134,7 +134,7 @@ class TalentDetailsView extends StatelessWidget {
                         padding: EdgeInsets.all(4.0),
                         child: Text('Posts:'),
                       ),
-                      const PostsPreview(),
+                      PostsPreview(talentId: _talent.id),
                       const Divider(),
                       const Padding(
                         padding: EdgeInsets.all(4.0),
