@@ -17,7 +17,7 @@ class AlbumListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(6),
+      padding: const EdgeInsets.all(10),
       child: InkWell(
         // onTap: () {
         //   Navigator.pushNamed(

@@ -5,6 +5,7 @@ import 'package:talent_list/extensions/extensions.dart';
 import 'package:talent_repository/talent_repository.dart';
 
 import 'package:talent_list/features/post_details/post_details.dart';
+import 'package:talent_list/shared_widgets/shared_widgets.dart';
 
 class PostDetailsPage extends StatelessWidget {
   const PostDetailsPage({Key? key}) : super(key: key);
@@ -25,12 +26,46 @@ class PostDetailsPage extends StatelessWidget {
   }
 }
 
-class PostDetailsView extends StatelessWidget {
+class PostDetailsView extends StatefulWidget {
   const PostDetailsView({Key? key, required Post post})
       : _post = post,
         super(key: key);
 
   final Post _post;
+
+  @override
+  State<PostDetailsView> createState() => _PostDetailsViewState();
+}
+
+class _PostDetailsViewState extends State<PostDetailsView> {
+  final _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController
+      ..removeListener(_onScroll)
+      ..dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_isBottom) {
+      context.read<PostDetailsBloc>().add(PostDetailsCommentsLoadRequested());
+    }
+  }
+
+  bool get _isBottom {
+    if (!_scrollController.hasClients) return false;
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.offset;
+    return currentScroll >= (maxScroll * 0.9);
+  }
 
   void _startAddNewComment(BuildContext context, PostDetailsBloc bloc) {
     showModalBottomSheet(
@@ -78,7 +113,7 @@ class PostDetailsView extends StatelessWidget {
                     alignment: Alignment.center,
                     padding: const EdgeInsets.only(top: 20.0, bottom: 10),
                     child: Text(
-                      _post.title.capitalize(),
+                      widget._post.title.capitalize(),
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.headline5,
                     ),
@@ -88,7 +123,7 @@ class PostDetailsView extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
                     margin: const EdgeInsets.only(bottom: 10.0),
                     child: Text(
-                      _post.body.capitalize(),
+                      widget._post.body.capitalize(),
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.headline6,
                     ),
@@ -131,9 +166,15 @@ class PostDetailsView extends StatelessWidget {
                       return Expanded(
                         child: ListView.builder(
                           padding: const EdgeInsets.only(top: 5),
-                          itemCount: state.comments.length,
-                          itemBuilder: (context, index) =>
-                              CommentCard(comment: state.comments[index]),
+                          itemBuilder: (BuildContext context, index) {
+                            return index >= state.comments.length
+                                ? const BottomLoader()
+                                : CommentCard(comment: state.comments[index]);
+                          },
+                          itemCount: state.hasReachedMax
+                              ? state.comments.length
+                              : state.comments.length + 1,
+                          controller: _scrollController,
                         ),
                       );
                     },

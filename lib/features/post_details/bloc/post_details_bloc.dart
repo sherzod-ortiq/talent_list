@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:bloc/bloc.dart';
 
+import 'package:talent_list/event_transformer/event_transformer.dart';
 import 'package:talent_repository/talent_repository.dart';
 
 part 'post_details_event.dart';
@@ -17,6 +18,7 @@ class PostDetailsBloc extends Bloc<PostDetailsEvent, PostDetailsState> {
         super(const PostDetailsState()) {
     on<PostDetailsCommentsLoadRequested>(
       _onPostDetailsCommentsLoadRequested,
+      transformer: CustomEventTransformer.throttleDroppable(),
     );
     on<PostDetailsCommentCreateRequested>(
       _onPostDetailsCommentCreateRequested,
@@ -35,6 +37,7 @@ class PostDetailsBloc extends Bloc<PostDetailsEvent, PostDetailsState> {
     PostDetailsCommentsLoadRequested event,
     Emitter<PostDetailsState> emit,
   ) async {
+    if (state.hasReachedMax) return;
     try {
       if (state.commentsLoadStatus == PostDetailsLoadStatus.initial) {
         emit(state.copyWith(
@@ -45,6 +48,21 @@ class PostDetailsBloc extends Bloc<PostDetailsEvent, PostDetailsState> {
         return emit(state.copyWith(
           comments: comments,
           commentsLoadStatus: PostDetailsLoadStatus.success,
+          hasReachedMax: false,
+        ));
+      }
+      emit(state.copyWith(
+        commentsLoadStatus: PostDetailsLoadStatus.loading,
+      ));
+      final comments = await _talentRepository.getPostComments(
+          postId: _postId, startIndex: state.comments.length);
+      if (comments.isEmpty) {
+        return emit(state.copyWith(hasReachedMax: true));
+      } else {
+        return emit(state.copyWith(
+          commentsLoadStatus: PostDetailsLoadStatus.success,
+          comments: List.of(state.comments)..addAll(comments),
+          hasReachedMax: false,
         ));
       }
     } catch (_) {

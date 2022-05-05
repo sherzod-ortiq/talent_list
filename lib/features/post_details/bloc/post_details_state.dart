@@ -7,28 +7,29 @@ class PostDetailsState extends Equatable {
     this.comments = const <Comment>[],
     this.commentsLoadStatus = PostDetailsLoadStatus.initial,
     this.commentCreateStatus = PostDetailsLoadStatus.initial,
+    this.hasReachedMax = false,
   });
 
   final List<Comment> comments;
   final PostDetailsLoadStatus commentsLoadStatus;
   final PostDetailsLoadStatus commentCreateStatus;
+  final bool hasReachedMax;
 
   PostDetailsState copyWith({
     final List<Comment>? comments,
     final PostDetailsLoadStatus? commentsLoadStatus,
     final PostDetailsLoadStatus? commentCreateStatus,
+    bool? hasReachedMax,
   }) {
     return PostDetailsState(
       comments: comments ?? this.comments,
       commentsLoadStatus: commentsLoadStatus ?? this.commentsLoadStatus,
       commentCreateStatus: commentCreateStatus ?? this.commentCreateStatus,
+      hasReachedMax: hasReachedMax ?? this.hasReachedMax,
     );
   }
 
   @override
-  List<Object> get props => [
-        comments,
-        commentsLoadStatus,
-        commentCreateStatus,
-      ];
+  List<Object> get props =>
+      [comments, commentsLoadStatus, commentCreateStatus, hasReachedMax];
 }

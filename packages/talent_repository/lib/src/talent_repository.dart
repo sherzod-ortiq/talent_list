@@ -14,7 +14,7 @@ class TalentRepository {
   /// getTalents
   Future<List<Talent>> getTalents({
     int startIndex = 0,
-    int limit = 20,
+    int limit = 30,
   }) {
     return _talentApi.getTalents(
       startIndex: startIndex,
@@ -26,7 +26,7 @@ class TalentRepository {
   Future<List<Post>> getTalentPosts({
     required int talentId,
     int startIndex = 0,
-    int limit = 20,
+    int limit = 30,
   }) {
     return _talentApi.getTalentPosts(
       talentId: talentId,
@@ -39,7 +39,7 @@ class TalentRepository {
   Future<List<Comment>> getPostComments({
     required int postId,
     int startIndex = 0,
-    int limit = 20,
+    int limit = 30,
   }) {
     return _talentApi.getPostComments(
       postId: postId,
@@ -67,7 +67,7 @@ class TalentRepository {
   Future<List<Album>> getTalentAlbums({
     required int talentId,
     int startIndex = 0,
-    int limit = 20,
+    int limit = 30,
   }) {
     return _talentApi.getTalentAlbums(
       talentId: talentId,
@@ -80,7 +80,7 @@ class TalentRepository {
   Future<List<Photo>> getAlbumPhotos({
     required int albumId,
     int startIndex = 0,
-    int limit = 20,
+    int limit = 30,
   }) {
     return _talentApi.getAlbumPhotos(
       albumId: albumId,
