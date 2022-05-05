@@ -1,0 +1,9 @@
+export 'talent_card.dart';
+export 'info_tile.dart';
+export 'sub_info_tile.dart';
+export 'posts_preview.dart';
+export 'albums_preview.dart';
+export 'post_card_mini.dart';
+export 'posts_see_more.dart';
+export 'album_card_mini.dart';
+export 'albums_see_more.dart';
