@@ -15,4 +15,7 @@ class TalentDetailsAlbumPhotosLoadRequested extends TalentDetailsEvent {
   const TalentDetailsAlbumPhotosLoadRequested({required this.albumId});
 
   final int albumId;
+
+  @override
+  List<Object> get props => [albumId];
 }

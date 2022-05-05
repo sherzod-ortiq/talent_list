@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 
+import 'package:talent_repository/talent_repository.dart';
+
 import 'package:talent_list/extensions/extensions.dart';
+
+import 'package:talent_list/features/post_details/post_details.dart';
 
 class PostCardMini extends StatelessWidget {
   const PostCardMini({
     Key? key,
-    required String title,
-    required String body,
-  })  : _title = title,
-        _body = body,
+    required Post post,
+  })  : _post = post,
         super(key: key);
 
-  final String _title;
-  final String _body;
+  final Post _post;
 
   final double _width = 300;
 
@@ -21,6 +22,13 @@ class PostCardMini extends StatelessWidget {
     return SizedBox(
       width: _width,
       child: InkWell(
+        onTap: () {
+          Navigator.pushNamed(
+            context,
+            PostDetailsPage.routeName,
+            arguments: _post,
+          );
+        },
         child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
@@ -33,11 +41,11 @@ class PostCardMini extends StatelessWidget {
               horizontal: 5,
             ),
             title: Text(
-              _title.capitalize(),
-              style: Theme.of(context).textTheme.headline6,
+              _post.title.shortFormat(35),
+              style: Theme.of(context).textTheme.headline5,
             ),
             subtitle: Text(
-              _body.shortFormat(),
+              _post.body.shortFormat(40),
             ),
           ),
         ),

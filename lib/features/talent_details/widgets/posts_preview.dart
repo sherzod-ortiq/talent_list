@@ -60,8 +60,7 @@ class PostsPreview extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.all(8),
               children: <Widget>[
-                ...state.posts.map(
-                    (post) => PostCardMini(title: post.title, body: post.body)),
+                ...state.posts.map((post) => PostCardMini(post: post)),
                 PostsSeeMore(
                   talentId: _talentId,
                 ),

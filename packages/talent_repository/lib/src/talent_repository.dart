@@ -35,6 +35,34 @@ class TalentRepository {
     );
   }
 
+  /// getPostComments
+  Future<List<Comment>> getPostComments({
+    required int postId,
+    int startIndex = 0,
+    int limit = 20,
+  }) {
+    return _talentApi.getPostComments(
+      postId: postId,
+      startIndex: startIndex,
+      limit: limit,
+    );
+  }
+
+  /// createPostComment
+  Future<Comment> createPostComment({
+    required int postId,
+    required String name,
+    required String email,
+    required String body,
+  }) {
+    return _talentApi.createPostComment(
+      postId: postId,
+      name: name,
+      email: email,
+      body: body,
+    );
+  }
+
   /// getTalentAlbums
   Future<List<Album>> getTalentAlbums({
     required int talentId,

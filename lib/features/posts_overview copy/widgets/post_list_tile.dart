@@ -4,7 +4,7 @@ import 'package:talent_repository/talent_repository.dart';
 
 import 'package:talent_list/extensions/extensions.dart';
 
-import 'package:talent_list/features/post_details/post_details.dart';
+// import 'package:talent_list/features/talent_details/talent_details.dart';
 
 class PostListTile extends StatelessWidget {
   PostListTile({Key? key, required Post post})
@@ -19,13 +19,13 @@ class PostListTile extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(6),
       child: InkWell(
-        onTap: () {
-          Navigator.pushNamed(
-            context,
-            PostDetailsPage.routeName,
-            arguments: _post,
-          );
-        },
+        // onTap: () {
+        //   Navigator.pushNamed(
+        //     context,
+        //     PostDetailsPage.routeName,
+        //     arguments: _post,
+        //   );
+        // },
         child: ListTile(
           title: Text(
             _post.title.capitalize(),

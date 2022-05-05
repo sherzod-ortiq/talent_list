@@ -97,11 +97,11 @@ class CustomTheme {
       //     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       //   ),
       // ),
-      // floatingActionButtonTheme: FloatingActionButtonThemeData(
-      //   shape: const StadiumBorder(),
-      //   foregroundColor: CustomColor.black,
-      //   backgroundColor: CustomColor.darkGreen,
-      // ),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        shape: const StadiumBorder(),
+        foregroundColor: CustomColor.white,
+        backgroundColor: CustomColor.darkGreen,
+      ),
     );
   }
 }

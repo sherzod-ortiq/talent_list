@@ -5,9 +5,9 @@ extension StringExtension on String {
         : '';
   }
 
-  String shortFormat() {
-    if (length > 40) {
-      return '${substring(0, 40).capitalize().split('\n')[0]}...';
+  String shortFormat(int allowedLen) {
+    if (length > allowedLen) {
+      return '${substring(0, allowedLen).capitalize().split('\n')[0]}...';
     }
     return capitalize().split('\n')[0];
   }

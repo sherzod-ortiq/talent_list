@@ -20,6 +20,21 @@ abstract class TalentApi {
     required int limit,
   });
 
+  /// getPostComments
+  Future<List<Comment>> getPostComments({
+    required int postId,
+    required int startIndex,
+    required int limit,
+  });
+
+  /// createPostComment
+  Future<Comment> createPostComment({
+    required int postId,
+    required String name,
+    required String email,
+    required String body,
+  });
+
   /// getTalentAlbums
   Future<List<Album>> getTalentAlbums({
     required int talentId,
