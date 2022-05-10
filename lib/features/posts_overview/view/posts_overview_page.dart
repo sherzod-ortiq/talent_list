@@ -103,20 +103,17 @@ class _PostsOverviewViewState extends State<PostsOverviewView> {
               }
             }
 
-            // return CupertinoScrollbar(
-            //   child:
             return ListView.builder(
+              controller: _scrollController,
+              itemCount: state.hasReachedMax
+                  ? state.posts.length
+                  : state.posts.length + 1,
               itemBuilder: (BuildContext context, index) {
                 return index >= state.posts.length
                     ? const BottomLoader()
                     : PostListTile(post: state.posts[index]);
               },
-              itemCount: state.hasReachedMax
-                  ? state.posts.length
-                  : state.posts.length + 1,
-              controller: _scrollController,
             );
-            // );
           },
         ),
       ),

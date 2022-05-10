@@ -80,7 +80,7 @@ class TalentRepository {
   Future<List<Photo>> getAlbumPhotos({
     required int albumId,
     int startIndex = 0,
-    int limit = 30,
+    int limit = 10,
   }) {
     return _talentApi.getAlbumPhotos(
       albumId: albumId,

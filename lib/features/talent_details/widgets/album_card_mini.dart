@@ -4,32 +4,39 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:talent_list/features/talent_details/talent_details.dart';
 
+import 'package:talent_repository/talent_repository.dart';
+
 import 'package:talent_list/extensions/extensions.dart';
+
+import 'package:talent_list/features/album_details/album_details.dart';
 
 class AlbumCardMin extends StatelessWidget {
   const AlbumCardMin({
     Key? key,
-    required int albumId,
-    required String title,
-  })  : _albumId = albumId,
-        _title = title,
+    required Album album,
+  })  : _album = album,
         super(key: key);
 
-  final int _albumId;
-  final String _title;
+  final Album _album;
   final double _width = 200;
 
   @override
   Widget build(BuildContext context) {
     context
         .read<TalentDetailsBloc>()
-        .add(TalentDetailsAlbumPhotosLoadRequested(albumId: _albumId));
+        .add(TalentDetailsAlbumPhotosLoadRequested(albumId: _album.id));
     return BlocBuilder<TalentDetailsBloc, TalentDetailsState>(
       builder: (context, state) {
         return SizedBox(
           width: _width,
           child: InkWell(
-            // onTap: () => selectMeal(context),
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                AlbumDetailsPage.routeName,
+                arguments: _album,
+              );
+            },
             child: Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
@@ -46,7 +53,7 @@ class AlbumCardMin extends StatelessWidget {
                         ),
                         child: Column(
                           children: [
-                            if (state.photos[_albumId] == null) ...[
+                            if (state.photos[_album.id] == null) ...[
                               const SizedBox(
                                 width: 180,
                                 height: 180,
@@ -54,51 +61,60 @@ class AlbumCardMin extends StatelessWidget {
                                   child: CircularProgressIndicator(),
                                 ),
                               ),
-                            ] else if (state.photos[_albumId]!.isEmpty) ...[
-                              const Image(
+                            ] else if (state.photos[_album.id]!.isEmpty) ...[
+                              Image(
                                 height: 180,
                                 width: 180,
                                 fit: BoxFit.cover,
-                                image: AssetImage(
-                                  'assets/images/album_placeholder.jpg',
-                                ),
+                                image: const AssetImage(
+                                    'assets/images/album_placeholder.jpg'),
+                                loadingBuilder: (BuildContext context,
+                                    Widget child,
+                                    ImageChunkEvent? loadingProgress) {
+                                  if (loadingProgress == null) {
+                                    return child;
+                                  }
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                },
                               )
-                            ] else if (state.photos[_albumId]!.length == 1) ...[
-                              Image.network(
-                                state.photos[_albumId]![0].thumbnailUrl,
+                            ] else if (state.photos[_album.id]!.length ==
+                                1) ...[
+                              MiniNetworkPhoto(
                                 height: 180,
                                 width: 180,
-                                fit: BoxFit.cover,
+                                url: state.photos[_album.id]![0].thumbnailUrl,
                               ),
-                            ] else if (state.photos[_albumId]!.length == 2) ...[
-                              Image.network(
-                                state.photos[_albumId]![0].thumbnailUrl,
+                            ] else if (state.photos[_album.id]!.length ==
+                                2) ...[
+                              MiniNetworkPhoto(
                                 height: 90,
                                 width: 180,
-                                fit: BoxFit.cover,
+                                url: state.photos[_album.id]![0].thumbnailUrl,
                               ),
-                              Image.network(
-                                state.photos[_albumId]![1].thumbnailUrl,
+                              MiniNetworkPhoto(
                                 height: 90,
                                 width: 180,
-                                fit: BoxFit.cover,
+                                url: state.photos[_album.id]![1].thumbnailUrl,
                               ),
-                            ] else if (state.photos[_albumId]!.length == 3) ...[
+                            ] else if (state.photos[_album.id]!.length ==
+                                3) ...[
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 children: [
-                                  Image.network(
-                                    state.photos[_albumId]![0].thumbnailUrl,
+                                  MiniNetworkPhoto(
                                     height: 90,
                                     width: 90,
-                                    fit: BoxFit.cover,
+                                    url: state
+                                        .photos[_album.id]![0].thumbnailUrl,
                                   ),
-                                  Image.network(
-                                    state.photos[_albumId]![1].thumbnailUrl,
+                                  MiniNetworkPhoto(
                                     height: 90,
                                     width: 90,
-                                    fit: BoxFit.cover,
+                                    url: state
+                                        .photos[_album.id]![1].thumbnailUrl,
                                   ),
                                 ],
                               ),
@@ -106,30 +122,31 @@ class AlbumCardMin extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 children: [
-                                  Image.network(
-                                    state.photos[_albumId]![2].thumbnailUrl,
+                                  MiniNetworkPhoto(
                                     height: 90,
                                     width: 180,
-                                    fit: BoxFit.cover,
+                                    url: state
+                                        .photos[_album.id]![2].thumbnailUrl,
                                   ),
                                 ],
                               ),
-                            ] else if (state.photos[_albumId]!.length == 4) ...[
+                            ] else if (state.photos[_album.id]!.length ==
+                                4) ...[
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 children: [
-                                  Image.network(
-                                    state.photos[_albumId]![0].thumbnailUrl,
+                                  MiniNetworkPhoto(
                                     height: 90,
                                     width: 90,
-                                    fit: BoxFit.cover,
+                                    url: state
+                                        .photos[_album.id]![0].thumbnailUrl,
                                   ),
-                                  Image.network(
-                                    state.photos[_albumId]![1].thumbnailUrl,
+                                  MiniNetworkPhoto(
                                     height: 90,
                                     width: 90,
-                                    fit: BoxFit.cover,
+                                    url: state
+                                        .photos[_album.id]![1].thumbnailUrl,
                                   ),
                                 ],
                               ),
@@ -137,17 +154,17 @@ class AlbumCardMin extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 children: [
-                                  Image.network(
-                                    state.photos[_albumId]![2].thumbnailUrl,
+                                  MiniNetworkPhoto(
                                     height: 90,
                                     width: 90,
-                                    fit: BoxFit.cover,
+                                    url: state
+                                        .photos[_album.id]![2].thumbnailUrl,
                                   ),
-                                  Image.network(
-                                    state.photos[_albumId]![3].thumbnailUrl,
+                                  MiniNetworkPhoto(
                                     height: 90,
                                     width: 90,
-                                    fit: BoxFit.cover,
+                                    url: state
+                                        .photos[_album.id]![3].thumbnailUrl,
                                   ),
                                 ],
                               ),
@@ -166,7 +183,7 @@ class AlbumCardMin extends StatelessWidget {
                             horizontal: 20,
                           ),
                           child: Text(
-                            _title.capitalize(),
+                            _album.title.capitalize(),
                             style: TextStyle(
                               fontSize: 13,
                               color: Theme.of(context).colorScheme.onBackground,

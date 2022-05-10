@@ -75,8 +75,7 @@ class AlbumsPreview extends StatelessWidget {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: <Widget>[
-                ...state.albums.map((album) =>
-                    AlbumCardMin(albumId: album.id, title: album.title)),
+                ...state.albums.map((album) => AlbumCardMin(album: album)),
                 AlbumsSeeMore(talentId: _talentId),
               ],
             ),

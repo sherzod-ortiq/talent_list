@@ -48,25 +48,6 @@ class CustomTheme {
           color: CustomColor.white,
         ),
       ),
-      // tabBarTheme: TabBarTheme(
-      //   indicator: UnderlineTabIndicator(
-      //     borderSide: BorderSide(
-      //       width: 3.1,
-      //       color: CustomColor.black,
-      //     ),
-      //   ),
-      //   unselectedLabelColor: CustomColor.grey,
-      //   unselectedLabelStyle: const TextStyle(
-      //     fontSize: 17,
-      //     fontWeight: FontWeight.w400,
-      //   ),
-      //   labelColor: CustomColor.black,
-      //   labelStyle: const TextStyle(
-      //     fontSize: 19,
-      //     fontWeight: FontWeight.w400,
-      //   ),
-      // ),
-      // dataTableTheme: const DataTableThemeData(),
       listTileTheme: ListTileThemeData(
         tileColor: CustomColor.lightGreen,
         shape: RoundedRectangleBorder(
@@ -75,28 +56,6 @@ class CustomTheme {
       ),
       dividerTheme: const DividerThemeData(space: 1.0),
       dividerColor: CustomColor.grey,
-      // popupMenuTheme: PopupMenuThemeData(
-      //   textStyle: TextStyle(
-      //     color: CustomColor.black,
-      //   ),
-      //   color: CustomColor.lightGreen,
-      // ),
-      // elevatedButtonTheme: ElevatedButtonThemeData(
-      //   style: ElevatedButton.styleFrom(
-      //     primary: CustomColor.darkGreen,
-      //     textStyle: TextStyle(
-      //       color: CustomColor.black,
-      //     ),
-      //   ),
-      // ),
-      // textButtonTheme: TextButtonThemeData(
-      //   style: TextButton.styleFrom(
-      //     textStyle: TextStyle(
-      //       color: CustomColor.black,
-      //     ),
-      //     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      //   ),
-      // ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         shape: const StadiumBorder(),
         foregroundColor: CustomColor.white,
