@@ -4,7 +4,7 @@ import 'package:talent_repository/talent_repository.dart';
 
 import 'package:talent_list/extensions/extensions.dart';
 
-// import 'package:talent_list/features/talent_details/talent_details.dart';
+import 'package:talent_list/features/album_details/album_details.dart';
 
 class AlbumListTile extends StatelessWidget {
   AlbumListTile({Key? key, required Album album})
@@ -19,13 +19,13 @@ class AlbumListTile extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(10),
       child: InkWell(
-        // onTap: () {
-        //   Navigator.pushNamed(
-        //     context,
-        //     AlbumDetailsPage.routeName,
-        //     arguments: _album,
-        //   );
-        // },
+        onTap: () {
+          Navigator.pushNamed(
+            context,
+            AlbumDetailsPage.routeName,
+            arguments: _album,
+          );
+        },
         child: ListTile(
           leading: const Icon(Icons.photo),
           title: Text(
