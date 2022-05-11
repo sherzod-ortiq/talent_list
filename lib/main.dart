@@ -40,6 +40,7 @@ class AppView extends StatelessWidget {
       theme: CustomTheme.lightTheme,
       home: const TalentsOverviewPage(),
       routes: CustomRoutes.routes,
+      debugShowCheckedModeBanner: false,
     );
   }
 }
